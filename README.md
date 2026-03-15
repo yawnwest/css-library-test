@@ -131,6 +131,7 @@ Add code, e.g., `src/tokens/tokens.css`, `src/base/reset.css`, `src/base/typogra
 ### Initialize Project at npmjs.org
 
 ```bash
+# commit and merge to main
 npm login
 pnpm publish --access public
 ```
