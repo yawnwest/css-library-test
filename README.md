@@ -338,4 +338,34 @@ jobs:
         run: pnpm size
 ```
 
-Rewrite `vite.config.ts``
+Rewrite `vite.config.ts`
+
+```ts
+import { defineConfig } from "vite";
+import { resolve } from "path";
+
+export default defineConfig({
+  root: "playground",
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
+  build: {
+    outDir: resolve(__dirname, "dist"),
+    emptyOutDir: true,
+    lib: {
+      entry: resolve(__dirname, "src/index.ts"),
+      name: "YawnwestCssLibraryTest",
+      fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
+      formats: ["es", "cjs"],
+    },
+    sourcemap: true,
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        assetFileNames: () => "style.css",
+      },
+    },
+  },
+});
+```
