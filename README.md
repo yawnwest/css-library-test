@@ -474,3 +474,7 @@ export default defineConfig({
   },
 })
 ```
+
+## Dependency Check
+
+Add `.github/workflows/dependency-review.yml`
