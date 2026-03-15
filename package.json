@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode playground",
     "build": "vite build",
     "build:playground": "vite build --mode playground",
     "prepublishOnly": "pnpm build",
