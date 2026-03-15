@@ -359,7 +359,7 @@ git checkout -b chore/release-0.4.0
 git add .
 git commit -m "chore: release 0.4.0"
 git push -u origin chore/release-0.4.0
-pnpm version major --no-git-tag-version
+pnpm version minor --no-git-tag-version
 # → open PR & merge on GitHub
 
 git checkout main
@@ -502,6 +502,7 @@ Adapt `package.json``
 
 ```json
 "scripts": {
+  "dev": "vite --mode playground",
   "build:playground": "vite build --mode playground"
 }
 ```
