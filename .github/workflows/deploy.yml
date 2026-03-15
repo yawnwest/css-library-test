@@ -31,7 +31,7 @@ jobs:
         run: pnpm install
 
       - name: Build playground
-        run: pnpm exec vite build --mode playground
+        run: pnpm build:playground
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

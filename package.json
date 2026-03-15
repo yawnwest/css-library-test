@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:playground": "vite build --mode playground",
     "prepublishOnly": "pnpm build",
     "test": "vitest run",
     "test:watch": "vitest",
