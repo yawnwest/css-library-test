@@ -314,6 +314,32 @@ pnpm test:visual:update
 pnpm test:visual
 ```
 
+## Size Check
+
+```bash
+pnpm add -D @size-limit/preset-small-lib size-limit
+pnpm approve-builds
+```
+
+Adapt `package.json`
+
+```json
+"scripts": {
+  "size": "size-limit"
+},
+...
+"size-limit": [
+  {
+    "path": "dist/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "path": "dist/style.css",
+    "limit": "5 kB"
+  }
+]
+```
+
 ## Publish
 
 ### Initialize Project at npmjs.org
