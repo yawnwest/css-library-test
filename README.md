@@ -104,35 +104,114 @@ Adapt `tsconfig.json`
 Adapt `vite.config.ts`
 
 ```ts
-import { defineConfig } from "vite";
-import { resolve } from "path";
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "YawnwestCssLibraryTest",
-      fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
-      formats: ["es", "cjs"],
+      entry: resolve(__dirname, 'src/index.ts'),
+      name: 'YawnwestCssLibraryTest',
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      formats: ['es', 'cjs'],
     },
     sourcemap: true,
     cssCodeSplit: false,
     rollupOptions: {
       output: {
-        assetFileNames: () => "style.css",
+        assetFileNames: () => 'style.css',
       },
     },
   },
-});
+})
 ```
 
 Add code, e.g., `src/*`.
+
+## Lint & Format
+
+```bash
+pnpm add -D eslint prettier typescript-eslint eslint-config-prettier jiti
+```
+
+Add `.prettierignore`
+
+```
+dist/
+node_modules/
+pnpm-lock.yaml
+tests/visual/snapshots/
+```
+
+Add `.prettierrc`
+
+```json
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "printWidth": 100
+}
+```
+
+Add `eslint.config.ts`
+
+```ts
+import tseslint from 'typescript-eslint'
+import eslintConfigPrettier from 'eslint-config-prettier'
+
+export default tseslint.config(
+  {
+    files: ['src/**/*.ts', 'tests/**/*.ts'],
+    extends: [...tseslint.configs.recommended],
+  },
+  eslintConfigPrettier,
+  {
+    ignores: ['dist/**', 'playground/**', 'node_modules/**'],
+  }
+)
+```
+
+Adapt `package.json``
+
+````json
+"scripts": {
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "format": "prettier --write .",
+  "format:check": "prettier --check ."
+}
+```
+
+## Pre-Commit
+
+```bash
+pnpm add -D husky lint-staged
+pnpm exec husky init
+echo "pnpm exec lint-staged" > .husky/pre-commit
+```
+
+Adapt `package.json`
+```json
+"lint-staged": {
+  "*.ts": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "*.css": [
+    "prettier --write"
+  ],
+  "*.json": [
+    "prettier --write"
+  ]
+}
+```
 
 ## Testing
 
 ```bash
 pnpm add -D vitest
-```
+````
 
 ### Unit Tests
 
@@ -149,14 +228,14 @@ Adapt `package.json`
 Add `vitest.config.ts`
 
 ```ts
-import { defineConfig } from "vitest/config";
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   test: {
-    root: ".",
-    exclude: ["**/node_modules/**", "tests/visual/**"],
+    root: '.',
+    exclude: ['**/node_modules/**', 'tests/visual/**'],
   },
-});
+})
 ```
 
 See example tests here: `tests/build.test.ts` and `tests/tokens.test.ts`.
@@ -171,14 +250,14 @@ pnpm exec playwright install chromium webkit
 Add `playwright.config.ts`
 
 ```ts
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
-  testDir: "./tests/visual",
-  snapshotDir: "./tests/visual/snapshots",
-  updateSnapshots: "missing",
+  testDir: './tests/visual',
+  snapshotDir: './tests/visual/snapshots',
+  updateSnapshots: 'missing',
   snapshotPathTemplate:
-    "{testDir}/snapshots/{testFilePath}-snapshots/{arg}-{projectName}-darwin{ext}",
+    '{testDir}/snapshots/{testFilePath}-snapshots/{arg}-{projectName}-darwin{ext}',
   expect: {
     toHaveScreenshot: {
       threshold: 0.2,
@@ -186,28 +265,28 @@ export default defineConfig({
     },
   },
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: 'http://localhost:5173',
   },
   webServer: {
-    command: "pnpm dev",
-    url: "http://localhost:5173",
+    command: 'pnpm dev',
+    url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
   },
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
     },
     {
-      name: "mobile-chrome",
-      use: { ...devices["Pixel 5"] },
+      name: 'mobile-chrome',
+      use: { ...devices['Pixel 5'] },
     },
   ],
-});
+})
 ```
 
 Adapt `package.json``
@@ -234,6 +313,32 @@ Usage:
 pnpm test:visual:update
 # test against screenshots
 pnpm test:visual
+```
+
+## Size Check
+
+```bash
+pnpm add -D @size-limit/preset-small-lib size-limit
+pnpm approve-builds
+```
+
+Adapt `package.json`
+
+```json
+"scripts": {
+  "size": "size-limit"
+},
+...
+"size-limit": [
+  {
+    "path": "dist/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "path": "dist/style.css",
+    "limit": "5 kB"
+  }
+]
 ```
 
 ## Publish
@@ -314,7 +419,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
@@ -341,31 +446,31 @@ jobs:
 Rewrite `vite.config.ts`
 
 ```ts
-import { defineConfig } from "vite";
-import { resolve } from "path";
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
-  root: "playground",
+  root: 'playground',
   server: {
     port: 5173,
     strictPort: true,
   },
   build: {
-    outDir: resolve(__dirname, "dist"),
+    outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "YawnwestCssLibraryTest",
-      fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
-      formats: ["es", "cjs"],
+      entry: resolve(__dirname, 'src/index.ts'),
+      name: 'YawnwestCssLibraryTest',
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      formats: ['es', 'cjs'],
     },
     sourcemap: true,
     cssCodeSplit: false,
     rollupOptions: {
       output: {
-        assetFileNames: () => "style.css",
+        assetFileNames: () => 'style.css',
       },
     },
   },
-});
+})
 ```
