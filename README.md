@@ -182,6 +182,30 @@ Adapt `package.json``
 }
 ```
 
+## Pre-Commit
+
+```bash
+pnpm add -D husky lint-staged
+pnpm exec husky init
+echo "pnpm exec lint-staged" > .husky/pre-commit
+```
+
+Adapt `package.json`
+```json
+"lint-staged": {
+  "*.ts": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "*.css": [
+    "prettier --write"
+  ],
+  "*.json": [
+    "prettier --write"
+  ]
+}
+```
+
 ## Testing
 
 ```bash
