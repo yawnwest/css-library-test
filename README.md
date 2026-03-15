@@ -73,6 +73,7 @@ Adapt `package.json`
   "keywords": ["CSS Library"],
   "author": "Yawn West",
   "license": "MIT",
+  "packageManager": "pnpm@10.32.1",
   "devDependencies": {
     "@types/node": "^25.5.0",
     "typescript": "^5.9.3",
