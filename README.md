@@ -127,6 +127,114 @@ export default defineConfig({
 
 Add code, e.g., `src/*`.
 
+## Testing
+
+```bash
+pnpm add -D vitest
+```
+
+### Unit Tests
+
+Adapt `package.json`
+
+```json
+"scripts": {
+  "test": "vitest run",
+  "test:watch": "vitest",
+  "test:ci": "pnpm build && vitest run"
+}
+```
+
+Add `vitest.config.ts`
+
+```ts
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    root: ".",
+    exclude: ["**/node_modules/**", "tests/visual/**"],
+  },
+});
+```
+
+See example tests here: `tests/build.test.ts` and `tests/tokens.test.ts`.
+
+### e2e Tests
+
+```bash
+pnpm add -D @playwright/test
+pnpm exec playwright install chromium webkit
+```
+
+Add `playwright.config.ts`
+
+```ts
+import { defineConfig, devices } from "@playwright/test";
+
+export default defineConfig({
+  testDir: "./tests/visual",
+  snapshotDir: "./tests/visual/snapshots",
+  updateSnapshots: "missing",
+  snapshotPathTemplate:
+    "{testDir}/snapshots/{testFilePath}-snapshots/{arg}-{projectName}-darwin{ext}",
+  expect: {
+    toHaveScreenshot: {
+      threshold: 0.2,
+      maxDiffPixelRatio: 0.05,
+    },
+  },
+  use: {
+    baseURL: "http://localhost:5173",
+  },
+  webServer: {
+    command: "pnpm dev",
+    url: "http://localhost:5173",
+    reuseExistingServer: !process.env.CI,
+  },
+  projects: [
+    {
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+    },
+    {
+      name: "mobile-chrome",
+      use: { ...devices["Pixel 5"] },
+    },
+  ],
+});
+```
+
+Adapt `package.json``
+
+```json
+"scripts": {
+  "test:visual": "playwright test",
+  "test:visual:update": "rm -rf tests/visual/snapshots && playwright test --update-snapshots"
+}
+```
+
+Adapt .gitignore
+
+```
+test-results/
+```
+
+Example: `tests/visual/button.spec.ts`
+
+Usage:
+
+```bash
+# Generate screenshots
+pnpm test:visual:update
+# test against screenshots
+pnpm test:visual
+```
+
 ## Publish
 
 ### Initialize Project at npmjs.org
