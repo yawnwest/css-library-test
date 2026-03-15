@@ -21,7 +21,9 @@
     "prepublishOnly": "pnpm build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ci": "pnpm build && vitest run"
+    "test:ci": "pnpm build && vitest run",
+    "test:visual": "playwright test",
+    "test:visual:update": "rm -rf tests/visual/snapshots && playwright test --update-snapshots"
   },
   "keywords": [
     "CSS Library"
@@ -29,6 +31,7 @@
   "author": "Yawn West",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "^25.5.0",
     "typescript": "^5.9.3",
     "vite": "^8.0.0",
