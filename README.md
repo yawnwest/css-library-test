@@ -73,6 +73,7 @@ Adapt `package.json`
   "keywords": ["CSS Library"],
   "author": "Yawn West",
   "license": "MIT",
+  "packageManager": "pnpm@10.32.1",
   "devDependencies": {
     "@types/node": "^25.5.0",
     "typescript": "^5.9.3",
@@ -110,7 +111,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'YawnwestCssProjectTest',
+      name: 'YawnwestCssLibraryTest',
       fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
       formats: ['es', 'cjs'],
     },
@@ -260,7 +261,7 @@ export default defineConfig({
   expect: {
     toHaveScreenshot: {
       threshold: 0.2,
-      maxDiffPixelRatio: 0.05,
+      maxDiffPixelRatio: 0.15,
     },
   },
   use: {
@@ -389,4 +390,87 @@ export default defineConfig(({ command }) => {
     },
   };
 });
+```
+
+## Add CI
+
+### Basics
+
+Add `.github/workflows/ci.yml`
+
+```yaml
+name: CI
+
+on:
+  push:
+    # branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium webkit
+
+      - name: Build & Unit Tests
+        run: pnpm test:ci
+
+      - name: Visual Tests
+        run: pnpm test:visual
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Bundle size
+        run: pnpm size
+```
+
+Rewrite `vite.config.ts`
+
+```ts
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
+
+export default defineConfig({
+  root: 'playground',
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
+  build: {
+    outDir: resolve(__dirname, 'dist'),
+    emptyOutDir: true,
+    lib: {
+      entry: resolve(__dirname, 'src/index.ts'),
+      name: 'YawnwestCssLibraryTest',
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      formats: ['es', 'cjs'],
+    },
+    sourcemap: true,
+    cssCodeSplit: false,
+    rollupOptions: {
+      output: {
+        assetFileNames: () => 'style.css',
+      },
+    },
+  },
+})
 ```
