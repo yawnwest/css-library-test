@@ -502,6 +502,7 @@ Adapt `package.json``
 
 ```json
 "scripts": {
+  "dev": "vite --mode playground",
   "build:playground": "vite build --mode playground"
 }
 ```
