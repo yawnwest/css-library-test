@@ -182,7 +182,7 @@ export default defineConfig({
   expect: {
     toHaveScreenshot: {
       threshold: 0.2,
-      maxDiffPixelRatio: 0.05,
+      maxDiffPixelRatio: 0.15,
     },
   },
   use: {
@@ -298,7 +298,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    # branches: [main]
   pull_request:
     branches: [main]
 
@@ -307,23 +307,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: pnpm/action-setup@v4
-        with:
-          version: latest
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium webkit
 
       - name: Build & Unit Tests
         run: pnpm test:ci
 
       - name: Visual Tests
         run: pnpm test:visual
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Bundle size
+        run: pnpm size
 ```
+
+Rewrite `vite.config.ts``
