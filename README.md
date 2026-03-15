@@ -127,6 +127,39 @@ export default defineConfig({
 
 Add code, e.g., `src/*`.
 
+## Testing
+
+```bash
+pnpm add -D vitest
+```
+
+### Unit Tests
+
+Adapt `package.json`
+
+```json
+"scripts": {
+  "test": "vitest run",
+  "test:watch": "vitest",
+  "test:ci": "pnpm build && vitest run"
+}
+```
+
+Add `vitest.config.ts`
+
+```ts
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    root: ".",
+    exclude: ["**/node_modules/**", "tests/visual/**"],
+  },
+});
+```
+
+See example tests here: `tests/build.test.ts` and `tests/tokens.test.ts`.
+
 ## Publish
 
 ### Initialize Project at npmjs.org
