@@ -110,7 +110,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "YawnwestCssProjectTest",
+      name: "YawnwestCssLibraryTest",
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
       formats: ["es", "cjs"],
     },
@@ -284,4 +284,45 @@ export default defineConfig(({ command }) => {
     },
   };
 });
+```
+
+## Add CI
+
+### Basics
+
+Add `.github/workflows/ci.yml`
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build & Unit Tests
+        run: pnpm test:ci
+
+      - name: Visual Tests
+        run: pnpm test:visual
 ```
