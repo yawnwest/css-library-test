@@ -2,6 +2,10 @@
   "name": "@yawnwest/css-library-test",
   "version": "0.2.0",
   "description": "Test project for a CSS library.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yawnwest/css-library-test"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
