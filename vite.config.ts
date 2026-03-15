@@ -8,7 +8,7 @@ export default defineConfig({
     strictPort: true,
   },
   build: {
-    outDir: resolve(__dirname, 'dist'),
+    outDir: resolve(__dirname, 'dist-playground'),
     emptyOutDir: true,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),

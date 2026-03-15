@@ -480,3 +480,12 @@ export default defineConfig({
 Enable _Dependecy graph_ on https://github.com/yawnwest/css-library-test/settings/security_analysis
 
 Add `.github/workflows/dependency-review.yml`
+
+## Enable GitHub Pages
+
+On GitHub:
+
+1. Settings → Pages
+2. Source → GitHub Actions
+
+Add `.github/workflows/deploy.yml`
