@@ -1,0 +1,33 @@
+{
+  "name": "@yawnwest/css-library-test",
+  "version": "0.1.0",
+  "description": "Test project for a CSS library.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "CSS Library"
+  ],
+  "author": "Yawn West",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.0"
+  }
+}
