@@ -124,7 +124,7 @@ export default defineConfig({
 });
 ```
 
-Add code, e.g., `src/tokens/tokens.css`, `src/base/reset.css`, `src/base/typography.css` and `src/index.ts`.
+Add code, e.g., `src/*`.
 
 ## Publish
 
@@ -134,4 +134,27 @@ Add code, e.g., `src/tokens/tokens.css`, `src/base/reset.css`, `src/base/typogra
 # commit and merge to main
 npm login
 pnpm publish --access public
+```
+
+## Add Playgorund
+
+Add files like `playground/index.html` and `playground/main.ts`.
+
+Adapt `vite.config.ts`
+
+```ts
+...
+export default defineConfig(({ command }) => {
+  if (command === "serve") {
+    return {
+      root: "playground",
+    };
+  }
+
+  return {
+    build: {
+      ...
+    },
+  };
+});
 ```
