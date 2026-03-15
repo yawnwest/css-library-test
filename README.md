@@ -474,3 +474,9 @@ export default defineConfig({
   },
 })
 ```
+
+## Dependency Check
+
+Enable _Dependecy graph_ on https://github.com/yawnwest/css-library-test/settings/security_analysis
+
+Add `.github/workflows/dependency-review.yml`
