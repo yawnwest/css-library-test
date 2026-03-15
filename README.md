@@ -11,6 +11,7 @@ css-library-test/
 ├── dist/             ← Build-Output
 ├── .gitignore
 ├── .npmignore
+├── CHANGELOG.md
 ├── LICENSE
 ├── package.json
 ├── README.md
@@ -134,6 +135,24 @@ Add code, e.g., `src/*`.
 # commit and merge to main
 npm login
 pnpm publish --access public
+```
+
+### Publish Project
+
+```bash
+git checkout -b chore/release-0.4.0
+# CHANGELOG.md updaten
+git add .
+git commit -m "chore: release 0.4.0"
+git push -u origin chore/release-0.4.0
+pnpm version major --no-git-tag-version
+# → open PR & merge on GitHub
+
+git checkout main
+git pull
+git tag -a v0.4.0 -m "Release v0.4.0"
+git push --follow-tags
+pnpm publish --access public # if you don't have the publish GitHub Action
 ```
 
 ## Add Playgorund
