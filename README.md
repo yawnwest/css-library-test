@@ -479,6 +479,8 @@ export default defineConfig({
 
 Enable _Dependecy graph_ on https://github.com/yawnwest/css-library-test/settings/security_analysis
 
+Set _Require two-factor authentication and disallow tokens (recommended)_
+
 Add `.github/workflows/dependency-review.yml`
 
 ## Enable GitHub Pages
@@ -489,3 +491,9 @@ On GitHub:
 2. Source → GitHub Actions
 
 Add `.github/workflows/deploy.yml`
+
+## Publish
+
+On `https://npmjs.org` enable \_Trusted Publisher` for your package.
+
+Add `.github/workflows/publish.yml`
