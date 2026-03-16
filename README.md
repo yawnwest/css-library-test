@@ -2,6 +2,22 @@
 
 Test project for a CSS library.
 
+## Installation
+
+```bash
+pnpm add @yawnwest/css-library-test
+```
+
+## Usage
+
+Import the styles in your entry file:
+
+```ts
+import '@yawnwest/css-library-test/style.css'
+```
+
+## Basic Structure
+
 ```
 css-library-test/
 ├── src/
@@ -54,6 +70,10 @@ Adapt `package.json`
   "name": "@yawnwest/css-library-test",
   "version": "0.1.0",
   "description": "Test project for a CSS library.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yawnwest/css-project-test"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
