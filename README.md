@@ -16,6 +16,12 @@ Import the styles in your entry file:
 import '@yawnwest/css-library-test/style.css'
 ```
 
+## Ohne Bundler
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@yawnwest/css-library-test@0.2.0/dist/style.css" />
+```
+
 ## Basic Structure
 
 ```
